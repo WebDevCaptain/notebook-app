@@ -1,0 +1,27 @@
+{
+  "name": "cyberarmy-note",
+  "version": "0.0.1",
+  "author": "Shreyash <oss@webdevcaptain.com>",
+  "license": "MIT",
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "bin": "dist/index.js",
+  "scripts": {
+    "start": "tsc --watch --preserveWatchOutput",
+    "prepublishOnly": "esbuild src/index.ts --platform=node --outfile=dist/index.js --bundle --minify --define:process.env.NODE_ENV=\\\"production\\\""
+  },
+  "dependencies": {
+    "@cyberarmy-note/local-client": "^0.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^17.0.18",
+    "esbuild": "0.8.26",
+    "typescript": "^4.5.5",
+    "@cyberarmy-note/local-api": "^0.0.1",
+    "commander": "^9.0.0"
+  }
+}
