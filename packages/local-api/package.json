@@ -1,6 +1,6 @@
 {
   "name": "@cyberarmy-note/local-api",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "author": "Shreyash <oss@webdevcaptain.com>",
@@ -22,9 +22,9 @@
     "typescript": "^4.5.5"
   },
   "dependencies": {
+    "@cyberarmy-note/local-client": "^0.1.0",
     "@types/express": "^4.17.13",
     "express": "^4.17.3",
-    "http-proxy-middleware": "^2.0.3",
-    "@cyberarmy-note/local-client": "^0.1.0"
+    "http-proxy-middleware": "^2.0.3"
   }
 }
