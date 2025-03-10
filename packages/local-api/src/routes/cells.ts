@@ -8,7 +8,10 @@ interface Cell {
   type: "text" | "code";
 }
 
-export const createCellsRouter = (filename: string, dir: string) => {
+export const createCellsRouter = (
+  filename: string,
+  dir: string
+): express.Router => {
   const router = express.Router();
   router.use(express.json());
 
@@ -20,12 +23,14 @@ export const createCellsRouter = (filename: string, dir: string) => {
       const result = await fs.readFile(fullPath, { encoding: "utf-8" });
       res.send(JSON.parse(result));
     } catch (err: any) {
-      if (err.code === "ENOENT") {
-        fs.writeFile(fullPath, "[]", "utf-8");
-        res.send([]);
-      } else {
-        throw err;
-      }
+      console.log(err);
+
+      // if (err.code === "ENOENT") {
+      //   await fs.writeFile(fullPath, JSON.stringify([]), "utf-8");
+      //   res.send([]);
+      // } else {
+      //   throw err;
+      // }
     }
   });
 

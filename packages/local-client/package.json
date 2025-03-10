@@ -1,69 +1,57 @@
 {
   "name": "@cyberarmy-note/local-client",
+  "private": true,
   "version": "0.1.0",
   "publishConfig": {
     "access": "public"
   },
   "files": [
-    "build"
+    "dist"
   ],
-  "devDependencies": {
-    "@fortawesome/fontawesome-free": "5.15.1",
-    "@monaco-editor/react": "3.7.5",
-    "@testing-library/jest-dom": "^5.11.4",
-    "@testing-library/react": "^11.1.0",
-    "@testing-library/user-event": "^12.1.10",
-    "@types/jest": "^26.0.15",
-    "@types/jscodeshift": "0.7.2",
-    "@types/node": "^12.0.0",
-    "@types/prettier": "^2.2.1",
-    "@types/react": "^17.0.0",
-    "@types/react-dom": "^17.0.0",
-    "@types/react-redux": "7.1.15",
-    "@types/react-resizable": "1.7.2",
-    "@uiw/react-md-editor": "2.1.1",
-    "axios": "0.21.1",
-    "bulmaswatch": "^0.8.1",
-    "esbuild-wasm": "0.8.27",
-    "immer": "8",
-    "jscodeshift": "0.11.0",
-    "localforage": "^1.9.0",
-    "monaco-editor": "^0.22.3",
-    "monaco-jsx-highlighter": "0.0.15",
-    "prettier": "^2.2.1",
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1",
-    "react-redux": "7.2.2",
-    "react-resizable": "1.11.0",
-    "react-scripts": "4.0.2",
-    "redux": "4.0.5",
-    "redux-thunk": "2.3.0",
-    "typescript": "^4.1.2",
-    "web-vitals": "^1.0.1"
-  },
+  "type": "module",
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "prepublishOnly": "npm run build"
+    "dev": "vite",
+    "build:full": "tsc -b && vite build",
+    "build": "tsc --noEmit && vite build",
+    "lint": "eslint .",
+    "preview": "vite preview",
+    "prepublishOnly": "pnpm run build"
   },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
+  "dependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
   },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+  "devDependencies": {
+    "@eslint/js": "^9.21.0",
+    "@types/react": "^19.0.10",
+    "@types/react-dom": "^19.0.4",
+    "@vitejs/plugin-react": "^4.3.4",
+    "eslint": "^9.21.0",
+    "eslint-plugin-react-hooks": "^5.1.0",
+    "eslint-plugin-react-refresh": "^0.4.19",
+    "globals": "^15.15.0",
+    "typescript": "~5.7.2",
+    "typescript-eslint": "^8.24.1",
+    "vite": "^6.2.0",
+    "redux": "5.0.1",
+    "redux-thunk": "3.1.0",
+    "react-redux": "9.2.0",
+    "react-resizable": "3.0.5",
+    "axios": "1.8.2",
+    "bulmaswatch": "^0.8.1",
+    "esbuild-wasm": "0.25.1",
+    "immer": "8",
+    "jscodeshift": "17.1.2",
+    "localforage": "^1.10.0",
+    "monaco-editor": "^0.52.2",
+    "monaco-jsx-highlighter": "2.77.77",
+    "prettier": "^3.5.3",
+    "@types/react-redux": "7.1.34",
+    "@types/react-resizable": "3.0.8",
+    "@uiw/react-md-editor": "4.0.5",
+    "@types/prettier": "^3.0.0",
+    "@types/jscodeshift": "0.12.0",
+    "@fortawesome/fontawesome-free": "6.7.2",
+    "@monaco-editor/react": "4.7.0"
   }
 }

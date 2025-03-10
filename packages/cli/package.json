@@ -11,17 +11,18 @@
   },
   "bin": "dist/index.js",
   "scripts": {
-    "start": "tsc --watch --preserveWatchOutput",
-    "prepublishOnly": "esbuild src/index.ts --platform=node --outfile=dist/index.js --bundle --minify --define:process.env.NODE_ENV=\\\"production\\\""
+    "dev": "tsc --watch --preserveWatchOutput",
+    "prepublishOnly": "esbuild src/index.ts --platform=node --outfile=dist/index.js --bundle --minify --define:process.env.NODE_ENV=\\\"production\\\"",
+    "build": "esbuild src/index.ts --platform=node --outfile=dist/index.js --bundle --minify --define:process.env.NODE_ENV=\\\"production\\\""
   },
   "dependencies": {
-    "@cyberarmy-note/local-client": "^0.1.0"
+    "@cyberarmy-note/local-client": "workspace:*"
   },
   "devDependencies": {
-    "@cyberarmy-note/local-api": "^0.1.0",
+    "@cyberarmy-note/local-api": "workspace:*",
     "@types/node": "^17.0.18",
     "commander": "^9.0.0",
-    "esbuild": "0.8.26",
+    "esbuild": "0.25.1",
     "typescript": "^4.5.5"
   }
 }

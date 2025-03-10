@@ -12,7 +12,7 @@ export const serve = (
   const app = express();
 
   const packagePath = require.resolve(
-    "@cyberarmy-note/local-client/build/index.html"
+    "@cyberarmy-note/local-client/dist/index.html"
   );
 
   app.use(createCellsRouter(filename, dir));
@@ -21,7 +21,7 @@ export const serve = (
     // Development Proxy
     app.use(
       createProxyMiddleware({
-        target: "http://localhost:3000",
+        target: "http://localhost:5173",
         ws: true,
         logLevel: "silent",
       })
@@ -34,3 +34,7 @@ export const serve = (
     app.listen(port, resolve).on("error", reject);
   });
 };
+
+serve(4005, "notebook.js", process.cwd(), true).then(() => {
+  console.log("Listening on http://localhost:4005");
+});

@@ -1,12 +1,13 @@
 import "./code-editor.css";
 import "./syntax.css";
-import MonacoEditor, { EditorDidMount } from "@monaco-editor/react";
+import MonacoEditor, { OnMount } from "@monaco-editor/react";
 import prettier from "prettier";
-import parser from "prettier/parser-babel";
+import parser from "prettier/plugins/babel";
+import estree from "prettier/plugins/estree";
 import { useRef } from "react";
 
-import codeShift from "jscodeshift";
-import Highlighter from "monaco-jsx-highlighter";
+// import codeShift from "jscodeshift";
+// import Highlighter from "monaco-jsx-highlighter";
 
 interface CodeEditorProps {
   initialValue: string;
@@ -14,44 +15,55 @@ interface CodeEditorProps {
 }
 
 const CodeEditor: React.FC<CodeEditorProps> = ({ initialValue, onChange }) => {
-  const editorRef = useRef<any>();
+  const editorRef = useRef<any>(null);
 
-  const onEditorDidMount: EditorDidMount = (getValue, monacoEditor) => {
+  const onEditorDidMount: OnMount = (monacoEditor, _monaco) => {
+    console.log("onEditorDidMount", monacoEditor);
     editorRef.current = monacoEditor;
 
     monacoEditor.onDidChangeModelContent(() => {
-      onChange(getValue());
+      
+      onChange(monacoEditor.getValue());
     });
 
     monacoEditor.getModel()?.updateOptions({ tabSize: 2 });
 
-    const highlighter = new Highlighter(
-      // @ts-ignore
-      window.monaco,
-      codeShift,
-      monacoEditor
-    );
+    // const highlighter = new Highlighter(
+    //   // @ts-ignore
+    //   window.monaco,
+    //   codeShift,
+    //   monacoEditor
+    // );
 
-    highlighter.highLightOnDidChangeModelContent(
-      () => {},
-      () => {},
-      undefined,
-      () => {}
-    );
+    // highlighter.highLightOnDidChangeModelContent(
+    //   () => {},
+    //   () => {},
+    //   undefined,
+    //   () => {}
+    // );
   };
 
-  const onFormatClick = () => {
-    const unformatted = editorRef.current.getModel().getValue();
+  const onFormatClick = async () => {
+    const unformatted = editorRef.current.getValue();
 
-    const formatted = prettier
+    let formatted
+
+    try {
+      formatted = await prettier
       .format(unformatted, {
         parser: "babel",
-        plugins: [parser],
+        plugins: [parser, estree],
         useTabs: false,
         semi: true,
         singleQuote: true,
       })
-      .replace(/\n$/, "");
+    } catch (err: any) {
+      console.log('Error during prettier formatting', err);
+      return;
+    }
+
+    formatted = formatted.replace(/\n$/, "");
+      
 
     editorRef.current.setValue(formatted);
   };
@@ -65,18 +77,18 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ initialValue, onChange }) => {
         Format
       </button>
       <MonacoEditor
-        editorDidMount={onEditorDidMount}
+        onMount={onEditorDidMount}
         value={initialValue}
         height="100%"
         language="javascript"
-        theme="dark"
+        theme="vs-dark"
         options={{
           wordWrap: "on",
           minimap: { enabled: false },
           showUnused: false,
           folding: false,
           lineNumbersMinChars: 3,
-          fontSize: 16,
+          fontSize: 19,
           scrollBeyondLastLine: false,
           automaticLayout: true,
         }}
