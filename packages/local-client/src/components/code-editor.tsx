@@ -18,11 +18,10 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ initialValue, onChange }) => {
   const editorRef = useRef<any>(null);
 
   const onEditorDidMount: OnMount = (monacoEditor, _monaco) => {
-    console.log("onEditorDidMount", monacoEditor);
+    // console.log("onEditorDidMount", monacoEditor);
     editorRef.current = monacoEditor;
 
     monacoEditor.onDidChangeModelContent(() => {
-      
       onChange(monacoEditor.getValue());
     });
 
@@ -46,24 +45,22 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ initialValue, onChange }) => {
   const onFormatClick = async () => {
     const unformatted = editorRef.current.getValue();
 
-    let formatted
+    let formatted;
 
     try {
-      formatted = await prettier
-      .format(unformatted, {
+      formatted = await prettier.format(unformatted, {
         parser: "babel",
         plugins: [parser, estree],
         useTabs: false,
         semi: true,
         singleQuote: true,
-      })
+      });
     } catch (err: any) {
-      console.log('Error during prettier formatting', err);
+      console.log("Error during prettier formatting", err);
       return;
     }
 
     formatted = formatted.replace(/\n$/, "");
-      
 
     editorRef.current.setValue(formatted);
   };

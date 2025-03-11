@@ -21,17 +21,18 @@ const initialState: CellsState = {
 
 const reducer = produce((state: CellsState = initialState, action: Action) => {
   switch (action.type) {
-    case ActionType.UPDATE_CELL:
+    case ActionType.UPDATE_CELL: {
       const { id, content } = action.payload;
       state.data[id].content = content;
       return state;
+    }
 
     case ActionType.DELETE_CELL:
       delete state.data[action.payload];
       state.order = state.order.filter((id) => id !== action.payload);
       return state;
 
-    case ActionType.MOVE_CELL:
+    case ActionType.MOVE_CELL: {
       const { direction, id: cellId } = action.payload;
       const idx = state.order.findIndex((id) => id === cellId);
       const targetIdx = direction === "up" ? idx - 1 : idx + 1;
@@ -46,8 +47,9 @@ const reducer = produce((state: CellsState = initialState, action: Action) => {
         cellId,
       ];
       return state;
+    }
 
-    case ActionType.INSERT_CELL_AFTER:
+    case ActionType.INSERT_CELL_AFTER: {
       const cell: Cell = {
         content: "",
         type: action.payload.type,
@@ -63,6 +65,7 @@ const reducer = produce((state: CellsState = initialState, action: Action) => {
         state.order.splice(foundIdx + 1, 0, cell.id);
       }
       return state;
+    }
 
     case ActionType.FETCH_CELLS:
       state.loading = true;
@@ -72,10 +75,13 @@ const reducer = produce((state: CellsState = initialState, action: Action) => {
     case ActionType.FETCH_CELLS_COMPLETE:
       state.loading = false;
       state.order = action.payload.map((cell) => cell.id);
-      state.data = action.payload.reduce((acc, cell) => {
-        acc[cell.id] = cell;
-        return acc;
-      }, {} as CellsState["data"]);
+      state.data = action.payload.reduce(
+        (acc, cell) => {
+          acc[cell.id] = cell;
+          return acc;
+        },
+        {} as CellsState["data"],
+      );
       return state;
 
     case ActionType.FETCH_CELLS_ERROR:

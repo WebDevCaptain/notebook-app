@@ -16,7 +16,9 @@ const html = `
         </style>
       </head>
       <body>
-        <div id='root'></div>
+        <div id='root'>
+          You can use show() to print the output here
+        </div>
         <script>
           const handleError = (err) => {
               const root = document.querySelector('#root');
@@ -43,7 +45,7 @@ const html = `
   `;
 
 const Preview: React.FC<PreviewProps> = ({ code, bundlingError }) => {
-  const iframe = useRef<any>(null);
+  const iframe = useRef<HTMLIFrameElement>(null);
 
   useEffect(() => {
     iframe.current.srcdoc = html;

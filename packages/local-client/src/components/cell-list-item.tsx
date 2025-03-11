@@ -1,14 +1,17 @@
+import { ReactElement } from "react";
 import { Cell } from "../state";
 import ActionBar from "./action-bar";
 import CodeCell from "./code-cell";
 import TextEditor from "./text-editor";
+
 import "./cell-list-item.css";
+
 interface CellListItemProps {
   cell: Cell;
 }
 
 const CellListItem: React.FC<CellListItemProps> = ({ cell }) => {
-  let child: JSX.Element;
+  let child: ReactElement;
 
   if (cell.type === "code") {
     child = (

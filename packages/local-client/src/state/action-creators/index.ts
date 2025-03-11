@@ -1,4 +1,4 @@
-import axios from "axios";
+// import axios from "axios";
 import { Dispatch } from "redux";
 import { RootState } from "../reducers/index";
 import bundle from "../../bundler";
@@ -12,6 +12,7 @@ import {
   Action,
 } from "../actions";
 import { Cell, CellTypes } from "../cell";
+import { getCellsFromDB, saveCellsInDB } from "../cells-db";
 
 export const updateCell = (id: string, content: string): UpdateCellAction => {
   return {
@@ -42,7 +43,7 @@ export const moveCell = (id: string, direction: Direction): MoveCellAction => {
 
 export const insertCellAfter = (
   id: string | null,
-  cellType: CellTypes
+  cellType: CellTypes,
 ): InsertCellAfterAction => {
   return {
     type: ActionType.INSERT_CELL_AFTER,
@@ -84,7 +85,9 @@ export const fetchCells = () => {
     });
 
     try {
-      const { data }: { data: Cell[] } = await axios.get("/cells");
+      // const { data }: { data: Cell[] } = await axios.get("/cells");
+      const { data }: { data: Cell[] } = await getCellsFromDB();
+
       dispatch({
         type: ActionType.FETCH_CELLS_COMPLETE,
         payload: data,
@@ -107,9 +110,10 @@ export const saveCells = () => {
     const cells = order.map((id) => data[id]);
 
     try {
-      await axios.post("/cells", {
-        cells,
-      });
+      // await axios.post("/cells", {
+      //   cells,
+      // });
+      await saveCellsInDB(cells);
     } catch (err: any) {
       dispatch({
         type: ActionType.SAVE_CELLS_ERROR,
